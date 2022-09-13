@@ -1,6 +1,8 @@
 package com.simplekjl.servers.di
 
 import android.app.Application
+import com.simplekjl.data.di.dataModule
+import com.simplekjl.domain.di.domainModule
 import com.simplekjl.servers.BuildConfig
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -15,7 +17,7 @@ class MainApplication : Application() {
         startKoin {
             androidLogger(if (BuildConfig.DEBUG) ERROR else NONE)
             androidContext(this@MainApplication)
-            modules(listOf(mainModule))
+            modules(listOf(mainModule, dataModule, domainModule))
         }
     }
 }

@@ -22,8 +22,8 @@ class SessionManagerImpl(context: Context) : SessionManager {
         editor.apply()
     }
 
-    override fun fetchAuthToken(): String? {
-        return prefs.getString(USER_TOKEN, null)
+    override fun fetchAuthToken(): String {
+        return prefs.getString(USER_TOKEN, "") ?: ""
     }
 
     override fun deleteAuthToken() {

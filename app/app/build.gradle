@@ -53,6 +53,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     // common classes for testing
+    implementation project(':data')
     implementation project(':domain')
     testImplementation project(':testshared')
 

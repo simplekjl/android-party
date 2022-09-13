@@ -1,6 +1,7 @@
 package com.simplekjl.servers.di
 
 import android.annotation.SuppressLint
+import com.simplekjl.data.client.AuthInterceptor
 import com.simplekjl.domain.repository.SessionManager
 import com.simplekjl.servers.BuildConfig
 import com.simplekjl.servers.storage.SessionManagerImpl
@@ -22,6 +23,7 @@ private fun createMainModule() = module {
         val builder = OkHttpClient().newBuilder()
         builder.readTimeout(0, TimeUnit.SECONDS)
         builder.connectTimeout(5, TimeUnit.SECONDS)
+        builder.addInterceptor(AuthInterceptor(get()))
         if (BuildConfig.DEBUG) {
             val interceptor = HttpLoggingInterceptor()
             interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC)

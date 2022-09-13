@@ -4,4 +4,5 @@ dependencies {
     implementation Libraries.gsonConverter
     implementation Libraries.retrofit
     implementation Libraries.okHttp
+    implementation project(path: ':domain')
 }
