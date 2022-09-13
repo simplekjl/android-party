@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 rootProject.name = "Servers"
 include ':app'
 include ':testshared'
+include ':data'
