@@ -2,9 +2,11 @@ package com.simplekjl.servers.di
 
 import android.annotation.SuppressLint
 import com.simplekjl.servers.BuildConfig
+import com.simplekjl.servers.storage.SessionManagerImpl
 import java.util.concurrent.TimeUnit
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -33,4 +35,5 @@ private fun createMainModule() = module {
             .baseUrl(BuildConfig.BASE_URL)
             .build()
     }
+    single { SessionManagerImpl(androidContext()) }
 }
