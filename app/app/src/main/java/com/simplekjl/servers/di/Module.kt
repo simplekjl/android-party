@@ -1,6 +1,7 @@
 package com.simplekjl.servers.di
 
 import android.annotation.SuppressLint
+import com.simplekjl.domain.repository.SessionManager
 import com.simplekjl.servers.BuildConfig
 import com.simplekjl.servers.storage.SessionManagerImpl
 import java.util.concurrent.TimeUnit
@@ -35,5 +36,5 @@ private fun createMainModule() = module {
             .baseUrl(BuildConfig.BASE_URL)
             .build()
     }
-    single { SessionManagerImpl(androidContext()) }
+    single<SessionManager> { SessionManagerImpl(androidContext()) }
 }
