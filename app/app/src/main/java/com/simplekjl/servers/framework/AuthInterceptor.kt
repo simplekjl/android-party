@@ -1,4 +1,4 @@
-package com.simplekjl.data.client
+package com.simplekjl.servers.framework
 
 import com.simplekjl.domain.repository.SessionManager
 import okhttp3.Interceptor
