@@ -6,4 +6,5 @@ dependencies {
     testImplementation Libraries.junit4
     testImplementation Libraries.fixture
     testImplementation MockkLibraries.mockk
+    testImplementation GoogleLibraries.truth
 }

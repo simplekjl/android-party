@@ -39,4 +39,5 @@ private fun createMainModule() = module {
             .build()
     }
     single<SessionManager> { SessionManagerImpl(androidContext()) }
+    factory { AuthInterceptor(get()) }
 }
