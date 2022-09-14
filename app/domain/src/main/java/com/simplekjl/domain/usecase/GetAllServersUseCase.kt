@@ -8,9 +8,6 @@ import com.simplekjl.domain.utils.Result.Success
 import com.simplekjl.domain.utils.SuspendUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 
-/**
- * Returns the list of available restaurants sorted
- */
 class GetAllServersUseCase(
     private val dispatcher: CoroutineDispatcher,
     private val repository: ServersRepository
