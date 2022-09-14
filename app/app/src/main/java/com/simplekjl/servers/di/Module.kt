@@ -1,9 +1,10 @@
 package com.simplekjl.servers.di
 
 import android.annotation.SuppressLint
-import com.simplekjl.servers.framework.AuthInterceptor
+import com.simplekjl.data.client.ClientService
 import com.simplekjl.domain.repository.SessionManager
 import com.simplekjl.servers.BuildConfig
+import com.simplekjl.servers.framework.AuthInterceptor
 import com.simplekjl.servers.storage.SessionManagerImpl
 import java.util.concurrent.TimeUnit
 import okhttp3.OkHttpClient
@@ -38,6 +39,7 @@ private fun createMainModule() = module {
             .baseUrl(BuildConfig.BASE_URL)
             .build()
     }
+    single<ClientService> { get<Retrofit>().create(ClientService::class.java) }
     single<SessionManager> { SessionManagerImpl(androidContext()) }
     factory { AuthInterceptor(get()) }
 }
