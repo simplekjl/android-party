@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
@@ -46,9 +47,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.simplekjl.servers.R
+import com.simplekjl.servers.R.string
 import com.simplekjl.servers.ui.theme.Green
 import com.simplekjl.servers.ui.theme.ServersTheme
-
 
 
 @Composable
@@ -124,7 +125,6 @@ fun LoginScreen(
     LaunchedEffect(key1 = Unit) {
         // launch something
     }
-
     Box(
         modifier = Modifier.fillMaxSize(),
     ) {
@@ -139,7 +139,13 @@ fun LoginScreen(
                 .fillMaxSize()
                 .imePadding(),
         ) {
-
+            Image(
+                modifier = Modifier
+                    .paddingFromBaseline(top = 200.dp, bottom = 300.dp)
+                    .align(Alignment.CenterHorizontally),
+                painter = painterResource(R.drawable.ic_logo_light),
+                contentDescription = null,
+            )
             Spacer(modifier = Modifier.fillMaxHeight(.2F))
             InputField(
                 text = username,
@@ -177,7 +183,7 @@ fun LoginScreen(
                 enabled = true,
             ) {
                 Text(
-                    text = " Log in",
+                    text = stringResource(string.login_text),
                     color = Color.White,
                     style = MaterialTheme.typography.body2,
                     modifier = Modifier.padding(4.dp),
