@@ -5,4 +5,6 @@
     <string name="password_hint">Password</string>
     <string name="password_title">Password</string>
     <string name="login_text">Log in</string>
+    <string name="server_title">SERVER</string>
+    <string name="distance_title">DISTANCE</string>
 </resources>

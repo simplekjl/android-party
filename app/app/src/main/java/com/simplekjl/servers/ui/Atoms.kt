@@ -4,8 +4,10 @@ package com.simplekjl.servers.ui
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,10 +16,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
@@ -46,10 +50,84 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.simplekjl.domain.model.ServerDetails
 import com.simplekjl.servers.R
 import com.simplekjl.servers.R.string
-import com.simplekjl.servers.ui.theme.Green
 import com.simplekjl.servers.ui.theme.ServersTheme
+
+
+@Preview(showBackground = true)
+@Composable
+fun HeaderItemPreview() {
+    ServersTheme {
+        Column {
+            HeaderItem()
+            ServerInformationPreview()
+        }
+
+    }
+}
+
+@Composable
+fun HeaderItem() {
+    Card(
+        elevation = 8.dp,
+        shape = RoundedCornerShape(0.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = stringResource(string.server_title),
+                style = MaterialTheme.typography.body1,
+                color = MaterialTheme.colors.primary
+            )
+            Text(
+                text = stringResource(string.distance_title),
+                style = MaterialTheme.typography.body1,
+                color = MaterialTheme.colors.primary
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ServerInformationPreview() {
+    ServersTheme {
+        ServerInformationItem(serverDetails = ServerDetails(12, "Berlin", 9))
+    }
+}
+
+@Composable
+fun ServerInformationItem(serverDetails: ServerDetails) {
+    /*
+    if (index < itemsList.lastIndex)
+            Divider(color = Color.Black, thickness = 1.dp) for divider
+     */
+    Column {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = serverDetails.name,
+                style = MaterialTheme.typography.body1,
+                color = MaterialTheme.colors.primaryVariant
+            )
+            Text(
+                text = "${serverDetails.distance} km",
+                style = MaterialTheme.typography.body1,
+                color = MaterialTheme.colors.primaryVariant
+            )
+        }
+    }
+}
 
 
 @Composable
@@ -71,13 +149,13 @@ fun InputField(
             Text(
                 text = stringResource(id = hint),
                 style = MaterialTheme.typography.body1,
-                color = Color.Gray
+                color = MaterialTheme.colors.primary
             )
         },
         onValueChange = onValueChange,
         singleLine = true,
         colors = TextFieldDefaults.textFieldColors(
-            textColor = Color.Gray,
+            textColor = MaterialTheme.colors.primary,
             backgroundColor = Color.White
         ),
         leadingIcon = leadingIcon?.let {
@@ -86,7 +164,7 @@ fun InputField(
                     painter = painterResource(id = leadingIcon),
                     contentDescription = stringResource(id = iconDescription),
                     modifier = Modifier.alpha(0.5f),
-                    tint = Color.Gray,
+                    tint = MaterialTheme.colors.primary,
                 )
             }
         },
@@ -174,7 +252,7 @@ fun LoginScreen(
             Button(
                 onClick = { /*Do something */ },
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = Green,
+                    backgroundColor = MaterialTheme.colors.secondary,
                 ),
                 shape = MaterialTheme.shapes.small,
                 modifier = Modifier
