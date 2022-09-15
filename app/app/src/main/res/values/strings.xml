@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Servers</string>
+    <string name="username_hint">Username</string>
+    <string name="username_ic_description">username field</string>
+    <string name="password_hint">Password</string>
+    <string name="password_title">Password</string>
 </resources>

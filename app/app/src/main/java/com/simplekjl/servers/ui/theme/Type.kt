@@ -22,7 +22,7 @@ val Typography = Typography(
     ),
     body2 = TextStyle(
         fontFamily = Roboto,
-        fontWeight = FontWeight.Light,
+        fontWeight = FontWeight.Bold,
         fontSize = 14.sp
     ),
     // Other default text styles to override
