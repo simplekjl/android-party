@@ -6,6 +6,8 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -16,6 +18,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
@@ -62,6 +65,7 @@ fun LoginScreen(viewModel: LoginViewModel = getViewModel()) {
     var password by rememberSaveable { mutableStateOf("") }
     var visible by remember { mutableStateOf(true) }
     var btnEnabled by remember { mutableStateOf(true) }
+    val scrollState = rememberScrollState()
 
     when (state.value) {
         Error -> {
@@ -78,7 +82,12 @@ fun LoginScreen(viewModel: LoginViewModel = getViewModel()) {
         }
     }
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .scrollable(
+                state = scrollState,
+                orientation = Orientation.Vertical
+            ),
     ) {
         Image(
             painter = painterResource(id = R.drawable.bg),
