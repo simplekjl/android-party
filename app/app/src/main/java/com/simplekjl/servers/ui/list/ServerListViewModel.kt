@@ -10,6 +10,7 @@ import com.simplekjl.domain.utils.Result.Success
 import com.simplekjl.servers.navigation.NavTarget.Login
 import com.simplekjl.servers.navigation.Navigator
 import com.simplekjl.servers.ui.list.ServerListState.FetchingData
+import com.simplekjl.servers.ui.list.ServerListState.Logout
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -40,6 +41,7 @@ class ServerListViewModel(
 
     fun logout() {
         sessionManager.deleteAuthToken()
+        _serverListState.value = Logout
         navigator.navigateTo(Login)
     }
 
@@ -68,4 +70,5 @@ sealed class ServerListState {
     object FetchingData : ServerListState()
     data class LoadData(val serverList: List<ServerDetails>) : ServerListState()
     object Error : ServerListState()
+    object Logout : ServerListState()
 }

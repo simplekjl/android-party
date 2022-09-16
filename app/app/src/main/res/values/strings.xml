@@ -12,4 +12,5 @@
     <string name="server_list_description">Tesonio server list screen</string>
     <string name="log_out_description">Log out</string>
     <string name="something_went_wrong_error">Something went wrong</string>
+    <string name="no_available_servers_msg">No servers available, swipe to refresh</string>
 </resources>

@@ -56,7 +56,7 @@ fun NoServersMessage() {
         Text(
             modifier = Modifier
                 .padding(16.dp),
-            text = "No servers available",
+            text = stringResource(id = string.no_available_servers_msg),
             style = MaterialTheme.typography.h2,
             color = MaterialTheme.colors.primary
         )

@@ -42,6 +42,7 @@ import com.simplekjl.servers.ui.ServerInformationItem
 import com.simplekjl.servers.ui.list.ServerListState.Error
 import com.simplekjl.servers.ui.list.ServerListState.FetchingData
 import com.simplekjl.servers.ui.list.ServerListState.LoadData
+import com.simplekjl.servers.ui.list.ServerListState.Logout
 import com.simplekjl.servers.ui.theme.ServersTheme
 import org.koin.androidx.compose.getViewModel
 
@@ -57,15 +58,15 @@ fun ServerListScreenPreview() {
 fun ServerListScreen(viewModel: ServerListViewModel = getViewModel()) {
     val context = LocalContext.current
     val state = viewModel.serverListState.collectAsState()
-    var visible by remember { mutableStateOf(true) }
+    var loaderVisibility by remember { mutableStateOf(true) }
     var listVisibility by remember { mutableStateOf(true) }
 
     when (state.value) {
         FetchingData -> {
-            visible = true
+            loaderVisibility = true
         }
         is LoadData -> {
-            visible = false
+            loaderVisibility = false
             listVisibility = true
         }
         Error -> {
@@ -76,19 +77,23 @@ fun ServerListScreen(viewModel: ServerListViewModel = getViewModel()) {
             )
                 .show()
         }
+        Logout -> {
+            listVisibility = false
+            loaderVisibility = false
+        }
     }
-    Loader(visible)
+    Loader(loaderVisibility)
     AnimatedVisibility(
         visible = listVisibility,
         enter = fadeIn(animationSpec = tween(durationMillis = 500)),
         exit = fadeOut(animationSpec = tween(durationMillis = 500))
     ) {
-        ServerList(viewModel, !visible)
+        ServerList(viewModel)
     }
 }
 
 @Composable
-fun ServerList(viewModel: ServerListViewModel, visibility: Boolean) {
+fun ServerList(viewModel: ServerListViewModel) {
     val scaffoldState = rememberScaffoldState()
     Scaffold(
         scaffoldState = scaffoldState,
@@ -104,20 +109,20 @@ fun ServerList(viewModel: ServerListViewModel, visibility: Boolean) {
                     state = rememberSwipeRefreshState(isRefreshing = isRefreshing),
                     onRefresh = { viewModel.swipeRefresh() }
                 ) {
-                    if (serverList.isEmpty() && !isRefreshing) {
-                        NoServersMessage()
-                    } else {
-                        LazyColumn(
-                            modifier = Modifier
-                                .padding(padding)
-                                .fillMaxSize(),
-                            contentPadding = PaddingValues(16.dp)
-                        ) {
-                            itemsIndexed(serverList) { index, serverInfo ->
-                                ServerInformationItem(serverInfo)
-                                if (index < serverList.lastIndex)
-                                    Divider(color = MaterialTheme.colors.primary, thickness = 1.dp)
-                            }
+                    LazyColumn(
+                        modifier = Modifier
+                            .padding(padding)
+                            .fillMaxSize(),
+                        contentPadding = PaddingValues(16.dp)
+                    ) {
+                        item {
+                            if (serverList.isEmpty() && !isRefreshing)
+                                NoServersMessage()
+                        }
+                        itemsIndexed(serverList) { index, serverInfo ->
+                            ServerInformationItem(serverInfo)
+                            if (index < serverList.lastIndex)
+                                Divider(color = MaterialTheme.colors.primary, thickness = 1.dp)
                         }
                     }
                 }
