@@ -59,13 +59,14 @@ fun ServerListScreen(viewModel: ServerListViewModel = getViewModel()) {
     val context = LocalContext.current
     val state = viewModel.serverListState.collectAsState()
     var loaderVisibility by remember { mutableStateOf(true) }
-    var listVisibility by remember { mutableStateOf(true) }
+    var listVisibility by remember { mutableStateOf(false) }
 
     when (state.value) {
         FetchingData -> {
             loaderVisibility = true
+            listVisibility = false
         }
-        is LoadData -> {
+         LoadData -> {
             loaderVisibility = false
             listVisibility = true
         }

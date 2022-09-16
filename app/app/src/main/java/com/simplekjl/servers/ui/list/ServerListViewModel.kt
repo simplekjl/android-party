@@ -10,6 +10,7 @@ import com.simplekjl.domain.utils.Result.Success
 import com.simplekjl.servers.navigation.NavTarget.Login
 import com.simplekjl.servers.navigation.Navigator
 import com.simplekjl.servers.ui.list.ServerListState.FetchingData
+import com.simplekjl.servers.ui.list.ServerListState.LoadData
 import com.simplekjl.servers.ui.list.ServerListState.Logout
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -34,7 +35,8 @@ class ServerListViewModel(
 
     init {
         viewModelScope.launch {
-            delay(2000L)
+            _serverListState.value = FetchingData
+            delay(1000L)
             getServerList()
         }
     }
@@ -51,7 +53,6 @@ class ServerListViewModel(
     }
 
     private fun getServerList() {
-        _serverListState.value = ServerListState.FetchingData
         viewModelScope.launch {
             when (val serversResult = getAllServersUseCase(Unit)) {
                 is Error -> {
@@ -63,12 +64,13 @@ class ServerListViewModel(
                 }
             }
         }
+        _serverListState.value = LoadData
     }
 }
 
 sealed class ServerListState {
     object FetchingData : ServerListState()
-    data class LoadData(val serverList: List<ServerDetails>) : ServerListState()
+    object LoadData : ServerListState()
     object Error : ServerListState()
     object Logout : ServerListState()
 }
