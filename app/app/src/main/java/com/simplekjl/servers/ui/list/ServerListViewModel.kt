@@ -34,11 +34,7 @@ class ServerListViewModel(
     val isRefreshing: StateFlow<Boolean> = _isRefreshing
 
     init {
-        viewModelScope.launch {
-            _serverListState.value = FetchingData
-            delay(1000L)
-            getServerList()
-        }
+        getServerList()
     }
 
     fun logout() {
@@ -54,6 +50,8 @@ class ServerListViewModel(
 
     private fun getServerList() {
         viewModelScope.launch {
+            // delay to fake the response is taking longer than expected
+            delay(1000L)
             when (val serversResult = getAllServersUseCase(Unit)) {
                 is Error -> {
                     _isRefreshing.value = false
@@ -63,8 +61,8 @@ class ServerListViewModel(
                     _serverList.value = serversResult.data
                 }
             }
+            _serverListState.value = LoadData
         }
-        _serverListState.value = LoadData
     }
 }
 
