@@ -21,7 +21,7 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,13 +38,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.simplekjl.servers.R
-import com.simplekjl.servers.R.drawable
-import com.simplekjl.servers.R.string
 import com.simplekjl.servers.ui.InputField
-import com.simplekjl.servers.ui.Loader
 import com.simplekjl.servers.ui.login.LoginState.Error
+import com.simplekjl.servers.ui.login.LoginState.Loading
+import com.simplekjl.servers.ui.login.LoginState.NotLoggedIn
 import com.simplekjl.servers.ui.theme.ServersTheme
-import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.compose.getViewModel
 
 @Preview
@@ -57,6 +55,7 @@ fun LoginScreenPreview() {
 
 @Composable
 fun LoginScreen(viewModel: LoginViewModel = getViewModel()) {
+    val state = viewModel.loginState.collectAsState()
     val focusManager = LocalFocusManager.current
     val context = LocalContext.current
     var username by rememberSaveable { mutableStateOf("") }
@@ -64,19 +63,25 @@ fun LoginScreen(viewModel: LoginViewModel = getViewModel()) {
     var visible by remember { mutableStateOf(true) }
     var btnEnabled by remember { mutableStateOf(true) }
 
-    LaunchedEffect("errorMessage") {
-        viewModel.loginState.onEach {
-            if (it == Error) {
-                Toast.makeText(context, context.getText(R.string.error_login), Toast.LENGTH_SHORT)
-                    .show()
-            }
+    when (state.value) {
+        Error -> {
+            Toast.makeText(context, context.getText(R.string.error_login), Toast.LENGTH_SHORT)
+                .show()
+            btnEnabled = true
+        }
+        Loading -> {
+            btnEnabled = false
+        }
+        NotLoggedIn -> {
+            btnEnabled = true
+            visible = true
         }
     }
     Box(
         modifier = Modifier.fillMaxSize(),
     ) {
         Image(
-            painter = painterResource(id = drawable.bg),
+            painter = painterResource(id = R.drawable.bg),
             contentDescription = stringResource(R.string.app_name),
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize(),
@@ -101,7 +106,7 @@ fun LoginScreen(viewModel: LoginViewModel = getViewModel()) {
                     modifier = Modifier
                         .paddingFromBaseline(top = 200.dp, bottom = 300.dp)
                         .align(Alignment.CenterHorizontally),
-                    painter = painterResource(drawable.ic_logo_light),
+                    painter = painterResource(R.drawable.ic_logo_light),
                     contentDescription = null,
                 )
                 Spacer(modifier = Modifier.fillMaxHeight(.2F))
@@ -112,7 +117,7 @@ fun LoginScreen(viewModel: LoginViewModel = getViewModel()) {
                         .align(Alignment.CenterHorizontally),
                     hint = R.string.username_hint,
                     iconDescription = R.string.username_hint,
-                    leadingIcon = drawable.ic_username,
+                    leadingIcon = R.drawable.ic_username,
                     isSecure = false, onValueChange = { username = it },
                     focusManager = focusManager
                 )
@@ -122,17 +127,16 @@ fun LoginScreen(viewModel: LoginViewModel = getViewModel()) {
                     modifier = Modifier
                         .fillMaxWidth(.8F)
                         .align(Alignment.CenterHorizontally),
-                    hint = string.password_hint,
-                    iconDescription = string.password_hint,
-                    leadingIcon = drawable.ic_lock,
+                    hint = R.string.password_hint,
+                    iconDescription = R.string.password_hint,
+                    leadingIcon = R.drawable.ic_lock,
                     isSecure = true, onValueChange = { password = it },
                     focusManager = focusManager
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Button(
                     onClick = {
-                        btnEnabled = false
-                        visible = false
+                        viewModel.signIn(username, password)
                     },
                     colors = ButtonDefaults.buttonColors(
                         backgroundColor = MaterialTheme.colors.secondary,
@@ -144,7 +148,7 @@ fun LoginScreen(viewModel: LoginViewModel = getViewModel()) {
                     enabled = btnEnabled,
                 ) {
                     Text(
-                        text = stringResource(string.login_text),
+                        text = stringResource(R.string.login_text),
                         color = Color.White,
                         style = MaterialTheme.typography.body2,
                         modifier = Modifier.padding(4.dp),
