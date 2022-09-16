@@ -4,9 +4,7 @@ import com.appmattus.kotlinfixture.decorator.nullability.NeverNullStrategy
 import com.appmattus.kotlinfixture.decorator.nullability.nullabilityStrategy
 import com.appmattus.kotlinfixture.kotlinFixture
 import com.simplekjl.data.model.ServerDetailsRaw
-import com.simplekjl.domain.model.ServerDetails
 import org.junit.Test
-import kotlin.test.assertTrue
 
 internal class MapperKtTest {
 
