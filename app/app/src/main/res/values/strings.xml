@@ -9,4 +9,7 @@
     <string name="distance_title">DISTANCE</string>
     <string name="fetching_list_title">Fetching the list...</string>
     <string name="error_login">Verify your credentials, please try again</string>
+    <string name="server_list_description">Tesonio server list screen</string>
+    <string name="log_out_description">Log out</string>
+    <string name="something_went_wrong_error">Something went wrong</string>
 </resources>

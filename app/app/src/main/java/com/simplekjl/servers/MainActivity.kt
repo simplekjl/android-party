@@ -9,7 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.simplekjl.servers.navigation.NavTarget
 import com.simplekjl.servers.navigation.Navigator
-import com.simplekjl.servers.ui.ServerList
+import com.simplekjl.servers.ui.list.ServerListScreen
 import com.simplekjl.servers.ui.login.LoginScreen
 import com.simplekjl.servers.ui.theme.ServersTheme
 import kotlinx.coroutines.flow.launchIn
@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
                         LoginScreen()
                     }
                     composable(NavTarget.ServerList.label) {
-                        ServerList(serverList = emptyList())
+                        ServerListScreen()
                     }
                 }
             }

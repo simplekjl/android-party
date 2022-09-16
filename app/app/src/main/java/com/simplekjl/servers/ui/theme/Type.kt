@@ -5,6 +5,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.FontWeight.Companion
 import androidx.compose.ui.unit.sp
 import com.simplekjl.servers.R
 
@@ -31,6 +32,10 @@ val Typography = Typography(
         fontWeight = FontWeight.W500,
         fontSize = 14.sp
     ),
+    h2 = TextStyle(
+        fontFamily = Roboto,
+        fontWeight = FontWeight.Bold
+    )
     /*
     caption = TextStyle(
         fontFamily = FontFamily.Default,
