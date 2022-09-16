@@ -7,4 +7,6 @@
     <string name="login_text">Log in</string>
     <string name="server_title">SERVER</string>
     <string name="distance_title">DISTANCE</string>
+    <string name="fetching_list_title">Fetching the list...</string>
+    <string name="error_login">Verify your credentials, please try again</string>
 </resources>
