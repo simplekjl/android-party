@@ -58,6 +58,7 @@ dependencies {
     // common classes for testing
     implementation project(':data')
     implementation project(':domain')
+    implementation 'androidx.security:security-crypto-ktx:1.1.0-alpha03'
     testImplementation project(':testshared')
 
     // Kotlin
